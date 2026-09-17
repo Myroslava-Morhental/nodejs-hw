@@ -7,13 +7,17 @@ import { errors } from 'celebrate';
 import { errorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import notesRouter from './routes/notesRoutes.js';
+import cookieParser from 'cookie-parser';
+import authRouter from './routes/authRoutes.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(logger);
 app.use(cors());
+app.use(cookieParser());
 
+app.use(authRouter);
 app.use(notesRouter);
 
 app.use(notFoundHandler);
