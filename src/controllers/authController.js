@@ -114,12 +114,16 @@ export const requestResetEmail = async (req, res) => {
       subject: 'Reset your password',
       html,
     });
-  } catch (error) {
-    console.error('EMAIL ERROR:', error);
-    res.status(200).json({
-      message: 'Password reset email sent successfully',
-    });
+  } catch {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
   }
+
+  res.status(200).json({
+    message: 'Password reset email sent successfully',
+  });
 };
 
 export const resetPassword = async (req, res) => {
